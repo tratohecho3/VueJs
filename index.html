@@ -8,12 +8,21 @@
 </head>
 <body>
     <div id="app">
-        hola {{nombre}}
+        <h1>Este es mi titulo</h1>
+        <a v-if="mostrar" :href="url" target="_blank">{{ pagina }}</a>
     </div>
 
 
-    <script src="https://unpkg.com/vue"></script>
+    <script  src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        let app = new Vue({
+            el: '#app',
+            data:{
+                pagina: 'google',
+                url: 'https://google.com',
+                mostrar: true
+            }
+        })
         
     </script>
 </body>
