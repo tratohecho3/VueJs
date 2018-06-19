@@ -8,19 +8,85 @@
 </head>
 <body>
     <div id="app">
-        <h1>Este es mi titulo</h1>
-        <a v-if="mostrar" :href="url" target="_blank">{{ pagina }}</a>
+        <div v-if="mostrar">
+            <h1>{{titulo | uppercase}}</h1>
+            <a v-if="mostrar" :href="url" target="_blank">{{ pagina }}</a>
+        </div>
+        <button @click="sumar">Sumar 1</button>
+        <button @click="restar">Restar 1</button>
+        {{contador}}
+
+        <input type="text" v-model="nombre" placeholder="Ingresa tu nombre">
+        <p>Tu nombre en mayuscula es {{ nombre | uppercase }}</p>
+
+        <form @submit.prevent="submit" >
+            <h2>Cuales son tus cursos favoritos?</h2>
+            <template v-for="curso in cursos">
+                    <curso :curso="curso" @checked="selectCurso"></curso>
+            </template>
+            <button type="submit">Enviar</button>
+        </form>
     </div>
 
 
     <script  src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+
+        Vue.component('curso', {
+            props: ['curso'],
+            methods: {
+                onchange: function(ev){
+                    this.$emit('checked',this.curso.value, ev.target.checked)
+                }
+            },
+            template: `
+            <div>
+                <input type="checkbox" :id="curso.value" :value="curso.value" @change="onchange">
+                <label :for="curso.value">{{ curso.nombre}}</label>
+            </div> 
+            `
+        })
         let app = new Vue({
             el: '#app',
             data:{
-                pagina: 'google',
+                titulo: 'Estas en platzi',
+                mostrar: true,
+                contador: 0,
+                nombre: '',
                 url: 'https://google.com',
-                mostrar: true
+                pagina: 'google',
+                cursos: [
+                    {nombre: 'Curso de Vue.js',value: 'vue'},
+                    {nombre: 'Curso de React.js',value: 'react'},
+                    {nombre: 'Curso de seo',value: 'seo'}],
+                cursosSeleccionados: []
+            },
+            filters: {
+                uppercase: function(str) {
+                    return str.toUpperCase()
+                }
+            },
+            methods: {
+                sumar: function(){
+                    this.contador++
+                },
+
+                restar: function(){
+                    this.contador--
+                },
+                submit: function(){
+                    console.log('metodo submit');
+                    console.log(this.cursosSeleccionados)
+                },
+                selectCurso: function(curso,checked){
+                    if (checked){
+                        this.cursosSeleccionados.push(curso)
+                    }
+                    else {
+                        let index = this.cursosSeleccionados.indexOf(curso)
+                        this.cursosSeleccionados.splice(index,1)
+                    }
+                }
             }
         })
         
