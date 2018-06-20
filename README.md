@@ -1,6 +1,10 @@
 # platzimusic
+Final link
+https://tratohecho3.github.io/VueJs/
 
-> A Vue.js project
+
+
+> A Vue.js project. I was only learning the basics of this framework, consuming an API
 
 ## Build Setup
 
