@@ -1,6 +1,6 @@
 import config from './config';
 
-const URL = `http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=:country&api_key=${config.apiKey}&format=json`;
+const URL = `https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=:country&api_key=${config.apiKey}&format=json`;
 
 
 export default function getArtists(country){
